@@ -75,10 +75,10 @@ void polygon::test_convexity(int n)
 	int* x_test=new int[2];
 	int* y_test=new int[2];
 	char* ack=new char[n];
-	int i,j,x1,x2,x3,y1,y2,y3;
-	ack[2]='\0';
+	int i=0,j,x1,x2,x3,y1,y2,y3,flag;
 do
 {
+
 	for(j=0; j<=2; j++)
 	{
 
@@ -91,20 +91,24 @@ do
 	 y1=y_test[0],y2=y_test[1],y3=y_test[2];
 
 	 ack[i] = this->turn_test(x1,y1,x2,y2,x3,y3);
-	 if(ack[i+1] !='\0')
+
+	 if(i>=1)
 	 {
-		 if(ack[i]==ack[i+1]) continue;
-		 else {
-				 cout<<"Its not a convex polygon";
-				 break;
-		 	  }
+		 if(ack[i]!=ack[i-1])
+		 {
+		 flag = 1;
+		 cout<<"Polygon is not convex"<<endl;
+		 break;
+		 }
 	 }
-	cout<<ack[i]<<endl;
+
 	index=index->next;
 	temp=index;
 	i=i+1;
 }
 while(index != head);
+
+if(flag != 1) cout<<"Polygon is convex"<<endl;
 
 }
 
