@@ -19,7 +19,10 @@ public:
 
 class intersection:public area{
 public:
+	float C1,C2,C3,C4;
+	char Cc1,Cc2,Cc3,Cc4;
 	void get_data(int*, int*, int*, int*, int*, int*, int*, int*);
+	void improper_intersect(int,int,int,int,int,int,int,int,char,char,char,char);
 	void decision(char,char,char,char);
 };
 
@@ -81,13 +84,58 @@ void intersection::get_data(int *x1,int *y1, int *x2, int *y2, int *x3, int *y3,
 	cin>>*x3>>*y3>>*x4>>*y4;
 
 }
+void intersection::improper_intersect(int x1,int y1,int x2,int y2,int x3,int y3,int x4,int y4,char LT1,char LT2,char RT1,char RT2)
+{
+	C1=this->calculate(x3,y3,x1,y1,x4,y4);
+	C2=this->calculate(x3,y3,x2,y2,x4,y4);
+	C3=this->calculate(x1,y1,x3,y3,x2,y2);
+	C4=this->calculate(x1,y1,x4,y4,x2,y2);
 
+	Cc1=this->decide(C1);
+	Cc2=this->decide(C2);
+	Cc3=this->decide(C3);
+	Cc4=this->decide(C4);
+
+	if(Cc1=='C')
+	{
+		if(((x3 <= x1) and (x1 <= x4)) or ((y3<= y1) and (y1 <= y4)) or ((x3 >= x1) and (x1 >= x4)) or ((y3 >= y1) and (y1 >= y4)))
+		{
+			cout<<"\n\tLine Segment AB and CD have Improper Intersection";
+		}
+	}
+	else if(Cc2=='C')
+	{
+		if(((x3 <= x2) and (x2 <= x4)) or ((y3<= y2) and (y2 <= y4)) or ((x3 >= x2) and (x2 >= x4)) or ((y3 >= y2) and (y2 >= y4)))
+		{
+			cout<<"\n\tLine Segment AB and CD have Improper Intersection";
+		}
+	}
+	else if(Cc3=='C')
+	{
+		if(((x1 <= x3) and (x3 <= x2)) or ((y1<= y3) and (y3 <= y2)) or ((x1 >= x3) and (x3 >= x2)) or ((y1 >= y3) and (y3 >= y2)))
+		{
+			cout<<"\n\tLine Segment AB and CD have Improper Intersection";
+		}
+	}
+	else if(Cc4=='C')
+	{
+		if(((x1 <= x4) and (x4 <= x2)) or ((y1<= y4) and (y4 <= y2)) or ((x1 >= x4) and (x4 >= x2)) or ((y1 >= y4) and (y4 >= y2)))
+		{
+			cout<<"\n\tLine Segment AB and CD have Improper Intersection";
+		}
+	}
+	else
+	{
+		this->decision(LT1,LT2,RT1,RT2);
+	}
+}
 void intersection::decision(char LT1,char LT2,char RT1,char RT2)
 {
+	//checking for improper intersection
 
-	if ( ( (LT1=='L' and LT2=='R') or (LT1=='R' and LT2=='L') ) and ( (RT1=='R' and RT2=='L')or (RT1=='L' and RT2=='R') ) )
+	if ( ( (LT1=='L' and LT2=='R') or (LT1=='R' and LT2=='L') ) and ( (RT1=='R' and RT2=='L') or (RT1=='L' and RT2=='R') ) )
 	{
-		cout<<"\n\tLine Segment AB and CD Intersect each other ! "<<endl;
+		cout<<"\n\tLine Segment AB and CD have Proper Intersection ! "<<endl;
 	}
 	else if(LT1=='C' and LT2=='C')
 	{
@@ -141,7 +189,8 @@ int main()
 		RT1=ack.decide(R1);
 		RT2=ack.decide(R2);
 
-		ack.decision(LT1,LT2,RT1,RT2);
+		ack.improper_intersect(x1,y1,x2,y2,x3,y3,x4,y4,LT1,LT2,RT1,RT2);
+
 
 		main();
 		break;
