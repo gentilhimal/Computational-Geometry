@@ -96,7 +96,11 @@ void intersection::improper_intersect(int x1,int y1,int x2,int y2,int x3,int y3,
 	Cc3=this->decide(C3);
 	Cc4=this->decide(C4);
 
-	if(Cc1=='C')
+	if((x1<x2 and x2<x3) or (y1<y2 and y2<y3) or (x1>x2 and x2>x3) or (y1>y2 and y2>y3) or (x1<x2 and x2<x4) or (y1<y2 and y2<y4) or (x1>x2 and x2>x4) or (y1>y2 and y2>y4))
+	{
+		cout<<"\n\tLine Segment AB and CD do not intersect each other !";
+	}
+	else if(Cc1=='C')
 	{
 		if(((x3 <= x1) and (x1 <= x4)) or ((y3<= y1) and (y1 <= y4)) or ((x3 >= x1) and (x1 >= x4)) or ((y3 >= y1) and (y1 >= y4)))
 		{
